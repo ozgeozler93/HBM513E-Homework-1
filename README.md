@@ -8,7 +8,7 @@
 
 ---
 
-## 📌 Project Overview
+## Project Overview
 
 Matrix multiplication ($C = A \times B$) is one of the most fundamental computational kernels in scientific computing, numerical linear algebra, and machine learning. While its naive implementation has a straightforward $\mathcal{O}(N^3)$ time complexity, achieving near-peak hardware performance requires careful attention to **memory hierarchy**, **cache locality**, **instruction-level parallelism**, and **SIMD vectorization**.
 
@@ -16,7 +16,7 @@ This repository contains the source code, numerical verification suite, visualiz
 
 ---
 
-## 📂 Repository Structure
+## Repository Structure
 
 ```text
 ├── code/
@@ -34,7 +34,7 @@ This repository contains the source code, numerical verification suite, visualiz
 
 ---
 
-## 🧠 Key Optimization Concepts Covered
+## Key Optimization Concepts Covered
 
 ### 1. Memory Layout & Loop Permutations (Spatial Locality)
 In C, matrices are stored in **row-major order**, meaning contiguous elements in a row reside in adjacent memory addresses. Different loop nest permutations drastically change memory access patterns:
@@ -53,7 +53,7 @@ All custom implementations are benchmarked against **OpenBLAS / Apple Accelerate
 
 ---
 
-## ✅ Numerical Correctness & Verification (`verify.c`)
+## Numerical Correctness & Verification (`verify.c`)
 
 Before measuring performance, every optimization must guarantee mathematical accuracy. Using `verify.c`, custom implementations are verified against `cblas_dgemm` for $N = 1000$ by computing the L2-norm of the difference matrix:
 
@@ -63,7 +63,7 @@ The verification confirms $\|E\|_2 = 0.00$ (within double-precision floating-poi
 
 ---
 
-## 🚀 Compilation & Execution Guide
+## Compilation & Execution Guide
 
 ### Prerequisites
 * **Compiler:** `gcc` or `clang`
@@ -95,7 +95,7 @@ python3 code/grafik_ciz.py
 
 ---
 
-## 📊 Key Takeaways
+## Key Takeaways
 1. **Algorithmic memory layout matters more than raw FLOP count:** Simply changing loop order from `IJK` to `IKJ` yields massive speedups without changing a single arithmetic operation.
 2. **Cache tiling bridges the memory wall:** Keeping working sets inside L1/L2 caches mitigates main memory bandwidth bottlenecks.
 3. **Production BLAS libraries remain the gold standard:** Hand-tuned micro-kernels with register-level blocking outperform standard compiler auto-vectorization on large problem sizes.
